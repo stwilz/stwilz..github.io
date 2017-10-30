@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>How to create a Cordova Plugin</title>
+    <meta name="description" content="A step by step tutorial to creating a Cordova plugin">
+    <!-- TODO: SEO -->
+
+    <!-- TODO: IMPLEMENT SOLUTION TO GET RELATIVE PATH IN METALSMITH -->
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+</head><body>
+    <header id="header" class="site-header">
+        <nav>
+            <input class="hamburger-toggle navigation-toggle" id="hamburger-toggle" type="checkbox"/>
+            <label class="hamburger" for="hamburger-toggle"></label>
+            <ul class="navigation">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#articles">Articles</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="about/index.html">About</a></li>
+                <li><a href="contact/index.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>    <article class="article">
+        <header class="article-header" style="background-image: url()">
+            <h1>How to create a Cordova Plugin</h1>
+        </header>
+        <section class="article-content">
+        <h2 id="overview">Overview</h2>
+<h3 id="surely-someone-has-covered-this-">Surely someone has covered this...</h3>
+<p>They sure have! However when I first started investigating how to create a basic Cordova plugin I found that there was a
+quit a bit of digging involved. By the time I&#39;d created my first plugin I had a hand full of lessons learnt.
+This tutorial covers all the steps and information I believe to be important for creating a Cordova plugin.</p>
+<h3 id="what-you-will-need">What you will need</h3>
+<ul>
+<li>terminal</li>
+<li>any kind of text editor (<a href="https://atom.io/">Atom</a>, <a href="https://code.visualstudio.com/">Visual Studio Code</a>).</li>
+<li><a href="https://nodejs.org/en/download/">nodejs</a></li>
+<li><a href="https://cordova.apache.org/#getstarted">cordova</a></li>
+<li><a href="https://github.com/apache/cordova-plugman">plugman</a></li>
+</ul>
+<h3 id="just-give-me-the-code-">Just give me the code!</h3>
+<p>Sure, if you just want to skip right to the code and see how everything works
+here you go <a href="https://www.github.com/stwilz/cordova-plugin-boilerplate">git</a>.</p>
+<h2 id="tutorial">Tutorial</h2>
+<h3 id="folder-structure">Folder structure</h3>
+<p>Below is the proposed folder structure. There is no enforced structure for where you wish to put your javascript and
+native code. In fact in my tutorial [third party library] I cover how to import a javascript library that is a node
+package. The convention of using <strong>/src</strong> for all native code and <strong>www/</strong> for all javascript is just one</p>
+<pre><code>plugin
+|--plugin.xml
+|--www/
+|   |--hello-world.js
+|--src/
+|   |--ios/
+|   |   |--hello-world.m
+|   |--android/
+|   |   |--hello-world.java
+</code></pre><ol>
+<li><p>You are going to use <a href="https://github.com/apache/cordova-plugman">plugman</a> to create our boilerplate files. This will
+generate our <strong>plugin.xml</strong>, <strong>www/hello-world.js</strong> and an emptt <strong>src/</strong> directory.</p>
+<p> Also another important thing to note is how to name your Cordova plugin.</p>
+<pre><code class="lang-bash"> plugman create --name hello-world --plugin_id cordova-hello-world --plugin_version 0.1.0 --plugin_dir ./
+</code></pre>
+</li>
+<li><p>Now we should update our Javascript method. Firstly, it is currently named <code>coolMethod</code> and secondly, the method should
+be converted to a promise as it will make your methods more flexible in the future.</p>
+<pre><code class="lang-javascript"> var exec = require(&#39;cordova/exec&#39;);
+
+ exports.helloWorld = function(arg0) {
+     return new Promise(function(success, error){
+         exec(success, error, &#39;hello-world&#39;, &#39;helloWorld&#39;, [arg0]);
+     });
+ };
+</code></pre>
+</li>
+<li><p>Plugman gives us a simple cli command to to add the Android platform. The following command will generate a
+new <strong>www/android/hello-world.java</strong> as well us updating our <strong>plugin.xml</strong> with a <code>&lt;platform name=&quot;android&quot;&gt;</code> node.</p>
+<pre><code class="lang-bash"> plugman platform add --platform_name android
+</code></pre>
+<p> Unfortunately it seems that plugman does not support an argument for setting our method name so we will need to open
+ our newly created <strong>www/android/hello-world.java</strong> file and do a quick refactor of the <code>coolMethod</code> value to <code>helloWorld</code>.
+ Our updated <strong>.java</strong> file should look as follows</p>
+<pre><code class="lang-java"> package cordova-hello-world;
+
+ import org.apache.cordova.CordovaPlugin;
+ import org.apache.cordova.CallbackContext;
+
+ import org.json.JSONArray;
+ import org.json.JSONException;
+ import org.json.JSONObject;
+
+ /**
+  * This class echoes a string called from JavaScript.
+  */
+ public class hello-world extends CordovaPlugin {
+
+     @Override
+     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+         if (action.equals(&quot;helloWorld&quot;)) {
+             String message = args.getString(0);
+             this.helloWorld(message, callbackContext);
+             return true;
+         }
+         return false;
+     }
+
+     private void helloWorld(String message, CallbackContext callbackContext) {
+         if (message != null &amp;&amp; message.length() &gt; 0) {
+             callbackContext.success(message);
+         } else {
+             callbackContext.error(&quot;Expected one non-empty string argument.&quot;);
+         }
+     }
+ }
+</code></pre>
+</li>
+<li><p>Most Cordova plugins you will see typically use Objective-C for their iOS code but don&#39;t be fooled!
+<a href="http://www.cultofmac.com/471301/swift-is-already-of-the-worlds-most-popular-programming-languages/">Swift is already one of the worlds most popular programming languages</a>,
+you can and should be using it! Simon Pricket at Modus Create has a great article on
+<a href="http://moduscreate.com/writing-a-cordova-plugin-in-swift-3-for-ios/">writing a Cordova plugin in swift</a>.</p>
+<ul>
+<li><p>First create your swift file</p>
+<pre><code class="lang-bash">  mkdir src/ios; cd src/ios; touch hello-world.swift
+</code></pre>
+</li>
+<li><p>Now open the newly created <strong>hello-world.swift</strong> and update it&#39;s contents with the following</p>
+<pre><code class="lang-swift">  @objc(HelloWorld) class HelloWorld : CDVPlugin {
+      @objc(helloWold:)
+
+      var pluginResult = CDVPluginResult(
+        status: CDVCommandStatus_ERROR
+      )
+
+      func helloWorld(command: CDVInvokedUrlCommand) {
+          self.commandDelegate!.send(
+              pluginResult,
+              callbackId: command.callbackId
+          )
+      }
+  }
+</code></pre>
+</li>
+<li><p><code>cd</code> back to the root directory of your plugin and update the <strong>plugin.xml</strong> file with a your iOS settings</p>
+<pre><code class="lang-xml">  &lt;platform name=&quot;ios&quot;&gt;
+      &lt;config-file parent=&quot;/*&quot; target=&quot;config.xml&quot;&gt;
+          &lt;feature name=&quot;hello-world&quot;&gt;
+              &lt;param name=&quot;ios-package&quot; value=&quot;hello-world&quot;/&gt;
+          &lt;/feature&gt;
+      &lt;/config-file&gt;
+      &lt;source-file src=&quot;src/ios/hello-world.swift&quot;/&gt;
+  &lt;/platform&gt;
+</code></pre>
+</li>
+<li><p>And finally we are going to need to update our <strong>plugin.xml</strong> with a <a href="https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html#dependency">Cordova Dependency</a>
+for the <a href="https://github.com/akofman/cordova-plugin-add-swift-support">Swift Support Plugin</a>.</p>
+<pre><code class="lang-xml">  &lt;dependency id=&quot;cordova-plugin-add-swift-support&quot; version=&quot;1.6.1&quot;/&gt;
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Now lets install this in a Cordova app to prove all of this works.</p>
+<ul>
+<li><p>In your terminal <code>cd</code> back to the root of your plugin directory and run the following command to create a Cordova
+helloWorld app with both the iOS and Android platforms.</p>
+<pre><code class="lang-bash">  cordova create example-app io.example.app HelloWorld; cd example-app; cordova platform add ios --save; cordova platform add android --save
+</code></pre>
+</li>
+<li><p>Once you have run the command above your terminal will now be in the <strong>example-app</strong> directory. What we need to do
+next is run a plugman command that will tell our plugin to install in the appropriate platform. If you copy and paste
+the following into your terminal it will install the plugin in the above directory into each platform directory.</p>
+<pre><code class="lang-bash">  plugman install --platform ios --project ./platforms/ios --plugin  ../../hello-world &amp;&amp; plugman install --platform android --project ./platforms/ios --plugin ../../hello-world
+</code></pre>
+<p>  Also, as you continue to develop your plugin you may want to remove the plugin. You can do this via the <code>uninstall</code> cli command like so</p>
+<pre><code>  plugman uninstall --platform ios --project ./example-app/platforms/ios --plugin ../../hello-world &amp;&amp; plugman uninstall --platform android --project ./example-app/platforms/ios --plugin ../../hello-world
+</code></pre></li>
+<li><p>Run it!</p>
+<pre><code class="lang-bash">  cordova build
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+
+        </section>
+    </article>
+</body>
+</html>

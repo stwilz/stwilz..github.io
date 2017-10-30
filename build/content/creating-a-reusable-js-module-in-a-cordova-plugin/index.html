@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Creating a reusable js-module in a Cordova plugin</title>
+    <meta name="description" content="Requiring javascript components in a Cordova plugin via the use of &#x27;js-module&#x27; and &#x27;runs&#x27;.">
+    <!-- TODO: SEO -->
+
+    <!-- TODO: IMPLEMENT SOLUTION TO GET RELATIVE PATH IN METALSMITH -->
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+</head><body>
+    <header id="header" class="site-header">
+        <nav>
+            <input class="hamburger-toggle navigation-toggle" id="hamburger-toggle" type="checkbox"/>
+            <label class="hamburger" for="hamburger-toggle"></label>
+            <ul class="navigation">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#articles">Articles</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="about/index.html">About</a></li>
+                <li><a href="contact/index.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>    <article class="article">
+        <header class="article-header" style="background-image: url()">
+            <h1>Creating a reusable js-module in a Cordova plugin</h1>
+        </header>
+        <section class="article-content">
+        <h2 id="overview">Overview</h2>
+<p>Cordova supports the creation of javascript components that can be shared within your plugin and others. This tutorial will
+cover how to create a reusable <code>&lt;js-module/&gt;</code> and how to <code>require()</code> it within other components. This is a purely
+javascript based tutorial we will not be covering any native functionality.</p>
+<p>If you aren&#39;t across the difference between <code>&lt;runs/&gt;</code>, <code>&lt;clobbers/&gt;</code> and <code>&lt;merges/&gt;</code> the
+<a href="https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html#js-module">Cordova Documentation</a> is excellent and I would
+advise reading it.</p>
+<h2 id="what-you-will-need">What you will need</h2>
+<h3 id="dependencies">Dependencies</h3>
+<ul>
+<li><a href="https://nodejs.org/en/download/">node</a></li>
+<li><a href="https://cordova.apache.org/docs/en/latest/guide/cli/">cordova</a></li>
+<li><a href="https://www.npmjs.com/package/plugman">plugman</a></li>
+</ul>
+<h2 id="tutorial">Tutorial</h2>
+<h3 id="creating-a-simple-plugin-with-js-modules">Creating a simple plugin with js-modules</h3>
+<ol>
+<li><p><a href="https://www.npmjs.com/package/plugman">Plugman</a> is a great way to get a Cordova plugin up and running fast. We are
+going to use it to create our scaffolding.</p>
+<pre><code class="lang-bash"> plugman create --name loader --plugin_id cordova-plugin-loader --plugin_version 0.0.1
+</code></pre>
+<p> This will create the directory <strong>loader</strong> with the following folder structure.</p>
+<pre><code> loader/
+ |--plugin.xml
+ |--src/
+ |--www/
+ |  |--loader.js
+</code></pre></li>
+<li><p>Create a new javascript file named <strong>ajax.component.js</strong> in a new directory <strong>ajax/</strong> under <strong>www/</strong>.</p>
+<pre><code class="lang-bash"> mkdir www/ajax; cd www/ajax/; touch ajax.component.js
+</code></pre>
+</li>
+<li><p>Now lets add some functionality. Below is a code snippet for a simple AJAX request wrapped in a promise and exported.
+Open our newly created <strong>ajax.component.js</strong> in your text editor of choice and paste in the below.</p>
+<pre><code class="lang-javascript"> module.exports = function(options){
+     return new Promise(function(success, failure){
+         var xhr = new XMLHttpRequest();
+
+         xhr.open(options.method, options.url);
+         xhr.onreadystatechange = function(){
+             if(xhr.status &gt;= 200 &amp;&amp; xhr.status &lt; 300){
+                 success(xhr.response);
+             }else{
+                 failure(xhr.response);
+             }
+         };
+         if(options.data){
+             xhr.send(options.data);
+         }
+     });
+ };
+</code></pre>
+</li>
+<li><p>To enable us to use this newly created component we are going to add it to our <strong>plugin.xml</strong> file as a <code>&lt;js-module&gt;</code>
+and define a <code>&lt;runs/&gt;</code> node within it.</p>
+<p> First navigate back to the root of our project.</p>
+<pre><code class="lang-bash"> cd ../../
+</code></pre>
+<p> Then open your <strong>plugin.xml</strong> file and add the following snippet under the <code>&lt;plugin/&gt;</code> node.</p>
+<pre><code class="lang-xml"> &lt;js-module name=&quot;ajax&quot; src=&quot;www/ajax.component.js&quot;&gt;
+     &lt;runs /&gt;
+ &lt;/js-module&gt;
+</code></pre>
+<p> Your final <strong>plugin.xml</strong> file should look like this.</p>
+<pre><code class="lang-xml"> &lt;?xml version=&#39;1.0&#39; encoding=&#39;utf-8&#39;?&gt;
+ &lt;plugin id=&quot;cordova-plugin-loader&quot; version=&quot;0.0.1&quot; xmlns=&quot;http://apache.org/cordova/ns/plugins/1.0&quot; xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+     &lt;name&gt;loader&lt;/name&gt;
+     &lt;js-module name=&quot;loader&quot; src=&quot;www/loader.js&quot;&gt;
+         &lt;clobbers target=&quot;cordova.plugins.loader&quot; /&gt;
+     &lt;/js-module&gt;
+     &lt;js-module name=&quot;ajax&quot; src=&quot;www/ajax.component.js&quot;&gt;
+         &lt;runs /&gt;
+     &lt;/js-module&gt;
+ &lt;/plugin&gt;
+</code></pre>
+</li>
+<li><p>Now open <strong>www/loader.js</strong> and require our new module. The namespace for our new module is the id of the plugin plus
+the name parameter we assigned our <code>&lt;js-module/&gt;</code>. This will make our new modules name <strong>cordova-plugin-loader.ajax</strong>.
+Your updated code should now look like this.</p>
+<pre><code class="lang-javascript"> var exec = require(&#39;cordova/exec&#39;);
+ var ajax = require(&#39;cordova-plugin-loader.ajax&#39;);
+
+ exports.coolMethod = function(arg0, success, error) {
+     exec(success, error, &quot;loader&quot;, &quot;coolMethod&quot;, [arg0]);
+ };
+</code></pre>
+</li>
+</ol>
+
+        </section>
+    </article>
+</body>
+</html>
