@@ -1,0 +1,23 @@
+{
+  "source": "src",
+  "destination": "build",
+  "plugins": {
+    "metalsmith-collections": {
+      "articles": "content/*.md"
+    },
+    "metalsmith-drafts": true,
+    "metalsmith-markdown": true,
+    "metalsmith-permalinks": "content/:title",
+    "metalsmith-layouts": {
+      "engine": "handlebars",
+      "partials": "partials"
+    },
+    "metalsmith-sass": {
+      "outputDir": "css/",
+      "sourceMap": true
+    },
+    "metalsmith-typescript": {
+      "outDir": "./build/js/"
+    }
+  }
+}
