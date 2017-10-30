@@ -1,0 +1,28 @@
+.article {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+.article-header {
+    background: black;
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    display: flex;
+    height: 50%;
+    min-height: 50%;
+    padding: 32px;
+    text-align: center;
+
+    h1 {
+        align-self: center;
+    }
+}
+
+.article-content {
+    padding: 0px 32px 32px;
+    max-width: 960px;
+    width: 100%;
+}

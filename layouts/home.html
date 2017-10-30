@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+{{> head}}
+<body>
+    {{> navigation}}
+    <div class="site-wrapper" style="background-image: url('./images/website-background-texture.jpg')">
+        <nav class="site-section">
+            <ul class="news-feed">
+            {{#each collections.articles}}
+                <li class="news-feed-article-item">
+                    <a href="./{{this.path}}/index.html">
+                        <div class="news-feed-image">
+                            <div class="news-feed-image-inner" style="background-image: url(./images/cordova-white-outline.png)"></div>
+                        </div>
+                        <div class="news-feed-text">
+                            <date class="news-feed-date">{{this.date}}</date>
+                            <span class="news-feed-title">
+                                {{this.title}}
+                            </span>
+                            <span class="news-feed-text-summary">
+                                {{this.description}}
+                            </span>
+                        </div>
+                    </a>
+                </li>
+            {{/each}}
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

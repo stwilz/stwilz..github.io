@@ -1,0 +1,18 @@
+.site-wrapper {
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.site-section {
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+    width: 100%;
+}

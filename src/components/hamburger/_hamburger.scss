@@ -1,0 +1,72 @@
+.hamburger {
+    cursor: pointer;
+    height: 4px;
+    margin: 16px 0;
+    position: fixed;
+    right: 24px;
+    top: 24px;
+    transition: background-color 0.3s ease-in-out;
+    width: 36px;
+    z-index: 3;
+}
+
+.hamburger,
+.hamburger::after, 
+.hamburger::before {
+    background-color: white;
+}
+
+.hamburger::after, 
+.hamburger::before {
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    transform: rotate(0) translateX(0) translateY(0);
+    transition: transform 0.3s ease-in-out;
+    width: 100%;
+}
+
+.hamburger::after {
+    top: -12px;
+}
+
+.hamburger::before {
+    bottom: -12px;
+}
+
+@media (min-width: 992px) {
+    .hamburger {
+        display: none;
+    }
+}
+
+@mixin hamburgerSelected {
+    background: transparent;
+    
+    &::before,
+    &::after {
+        background: #ffffff;
+    }
+    
+    &::before {
+        transform: rotate(-45deg) translateX(8px) translateY(-8px);
+    }
+    
+    &::after {
+        transform: rotate(45deg) translateX(8px) translateY(8px);
+    }
+}
+
+.hamburger.crossed {
+    @include hamburgerSelected();
+}
+
+.hamburger-toggle {
+    position: fixed;
+    left: -100%;
+
+    &:checked ~ .hamburger{
+        @include hamburgerSelected();
+    }
+}
