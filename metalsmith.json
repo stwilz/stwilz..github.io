@@ -1,6 +1,6 @@
 {
   "source": "src",
-  "destination": "docs",
+  "destination": "dist",
   "plugins": {
     "metalsmith-collections": {
       "articles": "content/*.md"
@@ -17,7 +17,7 @@
       "sourceMap": true
     },
     "metalsmith-typescript": {
-      "outDir": "./docs/js/"
+      "outDir": "./dist/js/"
     }
   }
 }
