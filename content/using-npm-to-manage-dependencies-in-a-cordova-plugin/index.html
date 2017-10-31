@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Using NPM to manage dependencies in a Cordova Plugin</title>
+    <meta name="description" content="With the correct Cordova hooks you can stop adding third party dependencies to your plugin repository.">
+    <!-- TODO: SEO -->
+
+    <!-- TODO: IMPLEMENT SOLUTION TO GET RELATIVE PATH IN METALSMITH -->
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="shortcut icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+</head><body>
+    <header id="header" class="site-header">
+        <nav>
+            <input class="hamburger-toggle navigation-toggle" id="hamburger-toggle" type="checkbox"/>
+            <label class="hamburger" for="hamburger-toggle"></label>
+            <ul class="navigation">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#articles">Articles</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="about/index.html">About</a></li>
+                <li><a href="contact/index.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>    <article class="article">
+        <header class="article-header" style="background-image: url()">
+            <h1>Using NPM to manage dependencies in a Cordova Plugin</h1>
+        </header>
+        <section class="article-content">
+        <p>Recently in my tutorial <a href="/tutorials/2017/03/13/creating-reusable-js-modules-in-cordova.html">Creating reusable js-module&#39;s in Cordova</a>
+I explained how to create a <code>&lt;js-module&gt;</code> that can be shared across your plugin. But what if we want to create a <code>&lt;js-module&gt;</code>
+from a third party library? And what if we want to use a dependency manager for that library?</p>
+<p>I recently attempted to do just that with <a href="https://www.npmjs.com/">npm</a> and found that with the implementation of a pre-install hook I was able
+to get my node modules to install before the plugin and then reference them within my <strong>plugin.xml</strong>.</p>
+<h2 id="here-s-how-to-do-it-">Here&#39;s how to do it!</h2>
+<p>I&#39;m going to continue this tutorial from where</p>
+<ol>
+<li><p>We will need to create a <strong>package.json</strong> file to list our node dependencies in. To do so open up your terminal and
+type in the following command.</p>
+<pre><code class="lang-bash"> cd loader; npm init
+</code></pre>
+<p> For the sake of this tutorial you can select all of the default options.</p>
+</li>
+<li><p>I&#39;ve chosen the <a href="https://github.com/asyncly/EventEmitter2">Event Emitter 2</a> to add to our library. We will combine this
+with our ajax component later. To add the dependency to our plugin type the following command into your terminal.</p>
+<pre><code class="lang-bash"> npm install --save eventemitter2
+</code></pre>
+</li>
+<li>Next we need to update our <strong>plugin.xml</strong> with the reference to our newly installed library.<pre><code class="lang-xml"> &lt;js-module name=&quot;EventEmitter2&quot; src=&quot;node_modules/eventemitter2/lib/eventemitter2.js&quot;&gt;
+     &lt;runs/&gt;
+ &lt;/js-module&gt;
+</code></pre>
+</li>
+<li><p>Since our EventEmitter2 library won&#39;t be available in our repository when user&#39;s install the plugin we need to add a
+Cordova hook that will run our <code>npm install</code> before the plugin installs.</p>
+<pre><code class="lang-bash"> mkdir hooks; cd hooks; touch install_dependencies.js
+</code></pre>
+</li>
+<li><p>Now open the newly created file<strong>install_dependencies.js</strong> and copy the following javascript.</p>
+<pre><code class="lang-javascript"> module.exports = function (context) {
+     var shell = context.requireCordovaModule(&#39;shelljs&#39;);
+
+     shell.cd(context.opts.plugin.dir);
+     shell.exec(&#39;npm install&#39;);
+ };
+</code></pre>
+</li>
+<li><p>To have the hook execute we need to add a <code>&lt;hook&gt;</code> node to our <strong>plugin.xml</strong>. Open up your <strong>plugin.xml</strong> file and
+add the following xml.</p>
+<pre><code class="lang-xml"> &lt;hook type=&quot;before_plugin_install&quot; src=&quot;hooks/install_dependencies.js&quot; /&gt;
+</code></pre>
+<p> It&#39;s important to note that the <strong>type</strong> value is required to determine the behaviour of the hook. You may see examples
+ where the hook is installed in a directory with the name of it&#39;s type ie <strong>./hooks/before_install/</strong>, however this
+ convention is <a href="https://cordova.apache.org/docs/en/latest/guide/appdev/hooks/#via-hooks-directory-deprecated">deprecated</a>.</p>
+</li>
+<li><p>Finally all we need to do is reference our newly created <code>&lt;js-module&gt;</code> in another javascript component. I&#39;m going to
+open the <strong>ajax.component.js</strong> we created in our previous project.</p>
+<pre><code class="lang-javascript"> var eventEmitter = require(&#39;cordova-plugin-ajax.eventEmitter&#39;);
+</code></pre>
+</li>
+</ol>
+
+        </section>
+    </article>
+</body>
+</html>
