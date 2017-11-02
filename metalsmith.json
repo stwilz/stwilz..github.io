@@ -2,12 +2,19 @@
   "source": "src",
   "destination": "dist",
   "plugins": {
-    "metalsmith-collections": {
-      "articles": "content/*.md"
-    },
     "metalsmith-drafts": true,
+    "metalsmith-collections": {
+      "articles": {
+        "pattern": "content/*.md",
+        "reverse": true,
+        "sortBy": "date"
+      }
+    },
     "metalsmith-markdown": true,
-    "metalsmith-permalinks": "content/:title",
+    "metalsmith-permalinks": {
+      "pattern": "content/:title",
+      "relative": false
+    },
     "metalsmith-layouts": {
       "engine": "handlebars",
       "partials": "partials"
