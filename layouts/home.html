@@ -3,14 +3,19 @@
 {{> head}}
 <body>
     {{> navigation}}
-    <div class="site-wrapper" style="background-image: url('./images/website-background-texture.jpg')">
+    <div class="site-wrapper" style="background-image: url('./images/textures/website-background-texture.jpg')">
         <nav class="site-section">
             <ul class="news-feed">
+            
             {{#each collections.articles}}
-                <li class="news-feed-article-item">
+                <li class="news-feed-{{this.category}}-item">
+                    {{#if this.external-link}}
+                    <a href="{{this.external-link}}" target="_bank">
+                    {{else}}
                     <a href="./{{this.path}}/index.html">
+                    {{/if}}
                         <div class="news-feed-image">
-                            <div class="news-feed-image-inner" style="background-image: url(./images/cordova-white-outline.png)"></div>
+                            <div class="news-feed-image-inner" style="background-image: url(./images/thumbs/{{this.thumb}})"></div>
                         </div>
                         <div class="news-feed-text">
                             <date class="news-feed-date">{{this.date}}</date>
