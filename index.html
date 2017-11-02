@@ -8,47 +8,42 @@
     <meta name="description" content="">
     <!-- TODO: SEO -->
 
-    <!-- TODO: IMPLEMENT SOLUTION TO GET RELATIVE PATH IN METALSMITH -->
-    <link rel="shortcut icon" href="./favicon.ico" />
-    <link rel="shortcut icon" href="../../favicon.ico" />
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/styles.css">
 </head><body>
     <header id="header" class="site-header">
         <nav>
             <input class="hamburger-toggle navigation-toggle" id="hamburger-toggle" type="checkbox"/>
             <label class="hamburger" for="hamburger-toggle"></label>
             <ul class="navigation">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#articles">Articles</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="about/index.html">About</a></li>
-                <li><a href="contact/index.html">Contact</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
             </ul>
         </nav>
-    </header>    <div class="site-wrapper" style="background-image: url('./images/website-background-texture.jpg')">
+    </header>    <div class="site-wrapper" style="background-image: url('./images/textures/website-background-texture.jpg')">
         <nav class="site-section">
             <ul class="news-feed">
-                <li class="news-feed-article-item">
-                    <a href="./content/creating-a-reusable-js-module-in-a-cordova-plugin/index.html">
+            
+                <li class="news-feed-tutorial-item">
+                    <a href="./content/how-to-create-a-cordova-plugin/index.html">
                         <div class="news-feed-image">
-                            <div class="news-feed-image-inner" style="background-image: url(./images/cordova-white-outline.png)"></div>
+                            <div class="news-feed-image-inner" style="background-image: url(./images/thumbs/cordova-white-outline.png)"></div>
                         </div>
                         <div class="news-feed-text">
-                            <date class="news-feed-date">2017-03-12 18:30:00 +1100</date>
+                            <date class="news-feed-date">2017-03-27 18:30:00 +1100</date>
                             <span class="news-feed-title">
-                                Creating a reusable js-module in a Cordova plugin
+                                How to create a Cordova Plugin
                             </span>
                             <span class="news-feed-text-summary">
-                                Requiring javascript components in a Cordova plugin via the use of &#x27;js-module&#x27; and &#x27;runs&#x27;.
+                                A step by step tutorial to creating a Cordova plugin
                             </span>
                         </div>
                     </a>
                 </li>
-                <li class="news-feed-article-item">
+                <li class="news-feed-tutorial-item">
                     <a href="./content/using-npm-to-manage-dependencies-in-a-cordova-plugin/index.html">
                         <div class="news-feed-image">
-                            <div class="news-feed-image-inner" style="background-image: url(./images/cordova-white-outline.png)"></div>
+                            <div class="news-feed-image-inner" style="background-image: url(./images/thumbs/npm-and-cordova.jpg)"></div>
                         </div>
                         <div class="news-feed-text">
                             <date class="news-feed-date">2017-03-19 11:00:00 +1100</date>
@@ -61,18 +56,66 @@
                         </div>
                     </a>
                 </li>
-                <li class="news-feed-article-item">
-                    <a href="./content/how-to-create-a-cordova-plugin/index.html">
+                <li class="news-feed-tutorial-item">
+                    <a href="./content/creating-a-reusable-js-module-in-a-cordova-plugin/index.html">
                         <div class="news-feed-image">
-                            <div class="news-feed-image-inner" style="background-image: url(./images/cordova-white-outline.png)"></div>
+                            <div class="news-feed-image-inner" style="background-image: url(./images/thumbs/cordova-white-outline.png)"></div>
                         </div>
                         <div class="news-feed-text">
-                            <date class="news-feed-date">2017-03-27 18:30:00 +1100</date>
+                            <date class="news-feed-date">2017-03-12 18:30:00 +1100</date>
                             <span class="news-feed-title">
-                                How to create a Cordova Plugin
+                                Creating a reusable js-module in a Cordova plugin
                             </span>
                             <span class="news-feed-text-summary">
-                                A step by step tutorial to creating a Cordova plugin
+                                Requiring javascript components in a Cordova plugin via the use of &#x27;js-module&#x27; and &#x27;runs&#x27;.
+                            </span>
+                        </div>
+                    </a>
+                </li>
+                <li class="news-feed-project-item">
+                    <a href="https://www.behance.net/gallery/47730131/Merx" target="_bank">
+                        <div class="news-feed-image">
+                            <div class="news-feed-image-inner" style="background-image: url(./images/thumbs/merx-thumb.jpg)"></div>
+                        </div>
+                        <div class="news-feed-text">
+                            <date class="news-feed-date">2017-02-28 09:00:00 +1100</date>
+                            <span class="news-feed-title">
+                                Merx scheduling App
+                            </span>
+                            <span class="news-feed-text-summary">
+                                An overview of the Merx scheduling app for IOS and Android.
+                            </span>
+                        </div>
+                    </a>
+                </li>
+                <li class="news-feed-project-item">
+                    <a href="https://www.behance.net/gallery/32742661/Tooheys-Master-Brand-Website" target="_bank">
+                        <div class="news-feed-image">
+                            <div class="news-feed-image-inner" style="background-image: url(./images/thumbs/tooheys-thumb.jpg)"></div>
+                        </div>
+                        <div class="news-feed-text">
+                            <date class="news-feed-date">2015-05-20 18:30:00 +1100</date>
+                            <span class="news-feed-title">
+                                Tooheys Master Brand website
+                            </span>
+                            <span class="news-feed-text-summary">
+                                The creation of the Tooheys Master brand website
+                            </span>
+                        </div>
+                    </a>
+                </li>
+                <li class="news-feed-project-item">
+                    <a href="https://www.behance.net/gallery/32959459/Fourex-Master-Brand" target="_bank">
+                        <div class="news-feed-image">
+                            <div class="news-feed-image-inner" style="background-image: url(./images/thumbs/fourex-thumb.jpg)"></div>
+                        </div>
+                        <div class="news-feed-text">
+                            <date class="news-feed-date">2014-06-12 18:30:00 +1100</date>
+                            <span class="news-feed-title">
+                                Fourex Master brand website
+                            </span>
+                            <span class="news-feed-text-summary">
+                                The creation of the Fourex beer website
                             </span>
                         </div>
                     </a>
