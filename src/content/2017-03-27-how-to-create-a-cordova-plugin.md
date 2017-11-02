@@ -1,12 +1,12 @@
 ---
-categories: tutorials
+category: tutorial
 date: 2017-03-27 18:30:00 +1100
-description: "A step by step tutorial to creating a Cordova plugin"
+description: A step by step tutorial to creating a Cordova plugin
 layout: article.html
-published: true
+draft: false
 tags: cordova javascript technology
-thumb: ""
-title: "How to create a Cordova Plugin"
+thumb: cordova-white-outline.png
+title: How to create a Cordova Plugin
 ---
 ## Overview
 ### Surely someone has covered this...

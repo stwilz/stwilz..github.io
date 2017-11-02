@@ -1,14 +1,14 @@
 ---
-categories: tutorials
-date:   2017-03-19 11:00:00 +1100
-description: "With the correct Cordova hooks you can stop adding third party dependencies to your plugin repository."
+category: tutorial
+date: 2017-03-19 11:00:00 +1100
+description: With the correct Cordova hooks you can stop adding third party dependencies to your plugin repository.
+draft: false
 layout: article.html
-published: true
 tags: cordova javascript technology npm node
-thumb: ""
-title:  "Using NPM to manage dependencies in a Cordova Plugin"
+thumb: npm-and-cordova.jpg
+title: Using NPM to manage dependencies in a Cordova Plugin
 ---
-Recently in my tutorial [Creating reusable js-module's in Cordova](/tutorials/2017/03/13/creating-reusable-js-modules-in-cordova.html)
+Recently in my tutorial [Creating reusable js-module's in Cordova](/content/creating-reusable-js-modules-in-cordova/index.html)
 I explained how to create a `<js-module>` that can be shared across your plugin. But what if we want to create a `<js-module>`
 from a third party library? And what if we want to use a dependency manager for that library?
 

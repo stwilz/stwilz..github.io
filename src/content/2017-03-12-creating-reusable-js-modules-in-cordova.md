@@ -1,12 +1,12 @@
 ---
-categories: tutorials
-date:   2017-03-12 18:30:00 +1100
-description: "Requiring javascript components in a Cordova plugin via the use of 'js-module' and 'runs'."
+category: tutorial
+date: 2017-03-12 18:30:00 +1100
+description: Requiring javascript components in a Cordova plugin via the use of 'js-module' and 'runs'.
 layout: article.html
-published: true
+draft: false
 tags: cordova javascript technology
-thumb: ""
-title: "Creating a reusable js-module in a Cordova plugin"
+thumb: cordova-white-outline.png
+title: Creating a reusable js-module in a Cordova plugin
 ---
 
 ## Overview
