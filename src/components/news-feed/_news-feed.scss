@@ -12,6 +12,22 @@
     padding: 16px;
     position: relative;
     text-decoration: none;
+
+    &::before {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        content: "";
+        display: block;
+        left: 0;
+        position: absolute;
+        height: 100%;
+        opacity: 0;
+        top: 0;
+        transform: scaleY(0);
+        transition: all 0.2s ease-in-out;
+        width: 100%;
+    }
 }
 
 .news-feed li:first-child {
@@ -29,6 +45,7 @@
     overflow: hidden;
     position: relative;
     min-height: 88px;
+    transform: scale(1);
     width: 88px;
 }
 
@@ -61,11 +78,18 @@
 
 .news-feed-article-item {
     .news-feed-date {
+        color: #ffeed6
+    }
+}
+
+.news-feed-article-item,
+.news-feed-tutorial-item {
+    .news-feed-date {
         color: #90f8ff;
     }
 }
 
-.news-feed-portfolio-item {
+.news-feed-project-item {
     .news-feed-date {
         color: #ffd6ff;
     }
@@ -98,7 +122,10 @@
     }
 
     .news-feed a:hover {
-        background-color: rgba(255, 255, 255, 0.05);
+        &::before {
+            opacity: 1;
+            transform: scaleY(1);
+        }
 
         .news-feed-image-inner {
             transform: scale(1.1);
