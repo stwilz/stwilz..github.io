@@ -3,7 +3,8 @@
 @import "./base/typography";
 @import "./base/layout";
 
+@import "./components/article/article";
+@import "./components/about/about";
 @import "./components/hamburger/hamburger";
 @import "./components/navigation/navigation";
 @import "./components/news-feed/news-feed";
-@import "./components/article/article";
