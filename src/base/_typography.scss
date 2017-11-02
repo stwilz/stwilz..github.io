@@ -15,6 +15,22 @@ h4 {
     line-height: 1.4em;
 }
 
+.dark-theme {
+    background-color: #000000;
+    color: #ffffff;
+    h1,
+    h2,
+    h3,
+    h4,
+    a {
+        color: #f1f2f2;
+    }
+
+    strong {
+        color: #ffffff;
+    }
+}
+
 h1 {
     color: white;
     font-size: 3.4rem;
@@ -79,4 +95,36 @@ ol {
 
 strong {
     font-weight: 600;
+}
+
+blockquote {
+    font-style: italic;
+    margin: 0;
+    padding: 8px 64px;
+    position: relative;
+
+    &::before,
+    &::after {
+        font-size: 8rem;
+        font-weight: 900;
+        line-height: 1em;
+        position: absolute;
+    }
+
+    &:before {
+        top: 20px;
+        left: 0;
+        content: "\201C";
+    }
+
+    &:after {
+        bottom: -20px;
+        right: 0;
+        content: "\201D";
+    }
+
+    p {
+        font-size: 3rem;
+        line-height: 1.4em;
+    }
 }
