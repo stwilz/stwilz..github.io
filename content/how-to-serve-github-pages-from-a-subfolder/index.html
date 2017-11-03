@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>How to serve Github Pages from a subfolder</title>
+    <meta name="description" content="Learn how to convert your master branch into a subtree">
+    <!-- TODO: SEO -->
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/styles.css">
+</head><body>
+    <header id="header" class="site-header">
+        <nav>
+            <input class="hamburger-toggle navigation-toggle" id="hamburger-toggle" type="checkbox"/>
+            <label class="hamburger" for="hamburger-toggle"></label>
+            <ul class="navigation">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+            </ul>
+        </nav>
+    </header>    <article class="article">
+        <header class="article-header" style="background-image: url()">
+            <h1>How to serve Github Pages from a subfolder</h1>
+        </header>
+        <section class="article-content">
+        <h2 id="introduction">Introduction</h2>
+<p>I recently moved my personal website to <a href="https://pages.github.com/">Github Pages</a> 
+which was super simple with the exception of one hiccup. I wanted to be able to
+serve my website from a subfolder which requires a subtree, but personal github 
+pages only allow your website to be served from the master branch.</p>
+<p>After a little experimenting I found that I was able to convert my master branch 
+to be a subtree which only contained the files I wanted to serve. Below is 
+a step by step process that you can follow to do the same. And if you need an 
+example project you can just <a href="https://github.com/stwilz/stwilz.github.io/">use my website</a>! :)</p>
+<h2 id="how-to-turn-master-into-a-subtree">How to turn master into a subtree</h2>
+<ol>
+<li>Clone your repo
+ I know, der, but whatever. You&#39;re obviously going to need to pull down your repo to get started.<pre><code>     git clone https://github.com/{repo}/{repo}.github.io.git
+</code></pre></li>
+<li>Create a develop branch
+ Next, we are going to need a new branch to develop or code on. <pre><code>     git checkout -b develop
+</code></pre></li>
+<li><p>Set develop to be your primary branch</p>
+</li>
+<li><p>Delete the repositories master branch
+ Don&#39;t worry, we will make a new one. But for now the master branch must die.</p>
+<pre><code>     git push origin --delete master
+</code></pre></li>
+<li><p>Build out your production files
+ You assumably have your own build process so run your requires metalsmith/gulp/grunt/webpack
+ command and build your static files out to whatever directory you want to use.</p>
+</li>
+<li><p>Commit your production files to master as a subtree
+ Now stage, commit and push your files. Below I use the <code>dist</code> directory so if you are not using
+ that naming convention you will need to update the command accordingly.</p>
+<pre><code> git stage -A
+ git commit -m &quot;compiled files for release 1.0.0
+ git subtree push --prefix dist origin master
+</code></pre></li>
+</ol>
+<h2 id="that-s-it-">That&#39;s it!</h2>
+<p>If you are seeing an error at first don&#39;t freak out. Github pages sometimes does take a little while
+to update.</p>
+
+        </section>
+    </article>
+</body>
+</html>
