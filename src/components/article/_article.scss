@@ -18,11 +18,14 @@
 
     h1 {
         align-self: center;
+        text-shadow: 0px 0px 40px rgba(0,0,0,0.5);
+        width: 100%;
     }
 }
 
 .article-content {
-    padding: 0px 32px 32px;
+    margin: 0 auto;
     max-width: 960px;
+    padding: 0px 32px 32px;
     width: 100%;
 }
