@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stop writing crappy CSS</title>
+    <meta name="description" content="A handful of approaches to create and retain quality CSS">
+    <!-- TODO: SEO -->
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/styles.css">
+</head><body>
+    <header id="header" class="site-header">
+        <nav>
+            <input class="hamburger-toggle navigation-toggle" id="hamburger-toggle" type="checkbox"/>
+            <label class="hamburger" for="hamburger-toggle"></label>
+            <ul class="navigation">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+            </ul>
+        </nav>
+    </header>    <article class="article">
+        <header class="article-header" style="background-image: url(/images/header-images/stop-writing-crappy-css-header.jpg)">
+            <h1>Stop writing crappy CSS</h1>
+        </header>
+        <section class="article-content">
+        <h2 id="ever-written-crappy-css-">Ever written crappy CSS?</h2>
+<p>You set out to write a masterpiece but now your code looks like something you reheated after a long night of drinking. It happens to the best of us. It&#39;s OK, we&#39;ve all written CSS we are not proud of. </p>
+<p>Sure, you&#39;re using <a href="http://sass-lang.com/">SASS</a>, <a href="http://lesscss.org/">LESS</a> or even <a href="http://postcss.org/">postcss</a> but it&#39;s not helping you to remember why you wrote those styles six months ago and somehow you are compiling far more CSS than you would expect. In this article I&#39;m going to address some typical problems developers have when writing CSS and (hopefully) provide some advice to improve what you write.</p>
+<h3 id="first-things-first-set-a-standard">First things first, set a standard</h3>
+<p>This is generally good practice in any software language. If everyone on the project agrees on the approach then they are all going to write consistent CSS. This is going to lead to less duplicated code and make life easier for new developers. Choose a naming convention and folder structure, make sure it&#39;s documented correctly in your readme and ensure it is enforced via code review.</p>
+<p>Here is a great article on <a href="https://codepen.io/hidanielle/post/css-methodologies-naming-conventions-and-file-structures">css methodologies</a> if you are interested in some of the different approaches you may way to use.</p>
+<h3 id="build-modular">Build modular</h3>
+<p>Web development has come a long way and thankfully modular and component-based architecture have become an industry standard. Where component-based architecture aids CSS greatly is by showing a relationship between your markup and your styling. Writing your CSS in isolation to its associated HTML and JavaScript makes removing functionality difficult and can result in redundant CSS being left in the build. </p>
+<p>If your application is using <a href="https://angularjs.org/">Angular</a> or <a href="https://reactjs.org/">React</a> their conventions force you to take this approach. If you are not currently building modular I highly encourage you to start doing so.</p>
+<h3 id="be-disciplined-with-source-control">Be disciplined with source control</h3>
+<p>If you currently don&#39;t have a code review process in place you should start. It doesn&#39;t matter if you are the only developer on the project or the most senior person on the team. If you are a lead don&#39;t be afraid to ask junior staff to review your code. If you are flying solo then create a pull request for yourself and review it with fresh eyes the following day.</p>
+<h3 id="weigh-up-the-pros-and-cons-of-using-a-framework-or-grid-system">Weigh up the pros and cons of using a framework or grid system</h3>
+<p>There&#39;s at least two benefits in using frameworks like <a href="https://getbootstrap.com/">Bootstrap</a> or <a href="https://foundation.zurb.com/">Foundation</a> that I think help prevent new developers making a mess in your build.</p>
+<ol>
+<li>Having an established grid means new developers can convert designs into markup without having to understand bespoke code. It also lowers the chance they will rewrite existing styles.</li>
+<li>Some frameworks have their own supported libraries for components. This means as new features are added to the build you can simply take the parts of the framework you need off the shelf without having to either go fish for a third-party library that fits your needs or writing more bespoke code. This results in your codebase being cleaner, saves developers on your team time and in the case of using third party tools midigates the risk of being let down by bugs in the library after becoming wed to it.</li>
+</ol>
+<p>Of course, my little caveat to all this is to weigh up the advantages us using a framework. You are responsible for making decisions about what goes into your code base. If you are adding libraries that add more file size than they do value you should be exploring other options.</p>
+<p>There&#39;s a great article by Timothy Marks <a href="https://codeburst.io/evaluating-css-frameworks-bulma-vs-foundation-vs-milligram-vs-pure-vs-semantic-vs-uikit-503883bd25a3">Evaluating CSS frameworks</a> which I would recommend if you are considering using a framework and need a breakdown of some of the options that are out there.</p>
+<h3 id="don-t-be-precious">Don&#39;t be precious</h3>
+<p><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">YAGNI</a>, learn it and live by it. Every time you commit a block of commented out code I die a little inside. Yes, your pre-compiler will remove this stuff from production but it just makes your CSS harder to read an potentially confusing. Don&#39;t do it. </p>
+<p>This is even more important for code that you just really want to keep for no justifiable reason. If it&#39;s not used get rid of it.</p>
+<h3 id="readme-like-a-boss">Readme like a boss</h3>
+<p>If new developers are having trouble gaining velocity on your project the chances are it&#39;s your fault. The readme file of your project should <strong>have everything a new developer should know in it</strong>. This includes,</p>
+<ul>
+<li>Project set up.</li>
+<li>Process for committing code.</li>
+<li>Coding standards and examples.</li>
+<li>Environments.</li>
+</ul>
+<h3 id="don-t-over-complicate-things">Don&#39;t over complicate things</h3>
+<p>Another typical hole developers fall into is attempting to write code that&#39;s going to accommodate every scenario possible. It&#39;s great when you have something that is flexible enough to work in different circumstances but the chances are that what you write is only going to cater for a single purpose. This tends to usually mean that the CSS you write will be too complicated for other developers to understand and may cause them to try and write around it. Not to mention you are adding to your builds file size without needing to. Over-engineering a feature also results in pouring more hours into a project than required or estimated.</p>
+<h3 id="add-linting-to-your-build-process">Add linting to your build process</h3>
+<p>Linting may seem like an unnecessary hassle to some developers but I can assure you it&#39;s a great way to keep your team honest. Not only does it help enforce the coding standard you have set for the project but it&#39;s going to save you time when doing code reviews as the feature branch will have already been checked for syntax and styling errors.</p>
+<p>As an aside you could use <a href="https://git-scm.com/docs/githooks">githooks</a> to run your lint prior to committing code so stop developers from committing anything that doesn&#39;t abide by your coding standards.</p>
+<h3 id="know-when-it-s-time-to-refactor">Know when it&#39;s time to refactor</h3>
+<p>As a developer it is part your job to decide when sections of CSS are having an impact on the productivity of the team and bring it to the attention of the product owner. How ever try to be as objective as possible, we developers are quick to want to refactor. Especially when inheriting legacy code.</p>
+<h3 id="so-what-did-we-learn-">So what did we learn?</h3>
+<ul>
+<li>Document a coding standard to keep your CSS consistent</li>
+<li>Keep your documentation up to date to help future developers.</li>
+<li>Decide on a folder structure that shows a relationship between your CSS and HTML/JS.</li>
+<li>Clean up after yourself. Don&#39;t leave files of blocks of code in the build because you think
+they will be relivant eventually.</li>
+<li>Decide if a CSS framework is actually going to improve the quality and productivity of your project.</li>
+<li>Code reviews to (hopefully) stop crappy CSS sneaking into the build.</li>
+<li>Lint.</li>
+</ul>
+
+        </section>
+    </article>
+</body>
+</html>
