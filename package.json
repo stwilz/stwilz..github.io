@@ -1,6 +1,6 @@
 {
   "name": "stwilz.github.io",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The website, portfolio and blog of Steve Wilcox.",
   "main": "index.js",
   "scripts": {
