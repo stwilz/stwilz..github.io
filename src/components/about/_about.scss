@@ -1,23 +1,78 @@
+$about-colours: #31b8ea, #fa3ead, #38d20f;
+$about-text-colour: #414042;
+
 .about-section {
+    background-color: white;
+
     h1 {
-        font-size: 6rem;
+        font-size: 3rem;
         margin-bottom: -32px;
     }
 
     h2 {
-        color: #b8ffd9;
-        font-size: 4.8rem;
-        font-weight: 100;
-        letter-spacing: 1px;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin: 8px 0 16px;
+        padding: 0 0 8px;
+        position: relative;
+        text-transform: uppercase;
+
+        &::after {
+            background-color: #636466;
+            content: "";
+            display: block;
+            position: absolute;
+            height: 3px;
+            top: 100%;
+            width: 33.33%;
+        }
+    }
+
+    [class^="col-"] {
+        @for $i from 1 through 3 {
+            &:nth-child(#{$i}) {
+                h2 {
+                    color: nth($about-colours, $i);
+
+                    &::after {
+                        background-color: nth($about-colours, $i);
+                    }
+                }
+            }
+        }
+    }
+
+    h2,
+    p {
+        color: $about-text-colour;
     }
 
     p {
-        line-height: 2em;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        line-height: 1.8em;
     }
 
     blockquote {
         p {
-            line-height: 1.4em;
+            line-height: 1.4rem;
+        }
+    }
+
+    .navigation {
+        a {
+            &,
+            &:hover {
+                color: $about-text-colour;
+            }
+        }
+    }
+
+    .hamburger {
+        &::after,
+        &::before {
+            background-color: $about-text-colour;
         }
     }
 }
